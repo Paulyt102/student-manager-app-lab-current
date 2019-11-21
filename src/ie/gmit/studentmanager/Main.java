@@ -75,20 +75,21 @@ public class Main extends Application implements Serializable {
         btnSaveDB.setOnAction(e -> {
             if(sm.findTotalStudents() > 0){
 
-            }
+            
 
             try{
                 File studentDB = new File("./resources/studentDB.ser");
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("studentsDB"));
                 out.writeObject(sm);
                 out.close();
-                tallyOutput.setText("ERROR! Failed to save to DB");
+                taMyOutput.setText("ERROR! Failed to save to DB");
             }catch(Exception exception){
                System.out.println("ERROR! Cannot save DB");
                exception.printStackTrace();
-               tallyOutput.setText("ERROR: Failed to save to save Students DB");
-            }else{
-tallyOutput.setText("No students in List to save!");
+               taMyOutput.setText("ERROR: Failed to save to save Students DB");
+            }
+        }else{
+taMyOutput.setText("No students in List to save!");
             }
             
             
