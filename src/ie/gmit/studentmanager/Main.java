@@ -3,6 +3,11 @@ package ie.gmit.studentmanager;
 import java.io.Serializable;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.File;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -65,6 +70,33 @@ public class Main extends Application implements Serializable {
 
 		});
 
+        //Save to db
+        Button btnSaveDB = new Button("Save to DB");
+        btnSaveDB.setOnAction(e -> {
+            if(sm.findTotalStudents() > 0){
+
+            }
+
+            try{
+                File studentDB = new File("./resources/studentDB.ser");
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("studentsDB"));
+                out.writeObject(sm);
+                out.close();
+                tallyOutput.setText("ERROR! Failed to save to DB");
+            }catch(Exception exception){
+               System.out.println("ERROR! Cannot save DB");
+               exception.printStackTrace();
+               tallyOutput.setText("ERROR: Failed to save to save Students DB");
+            }else{
+tallyOutput.setText("No students in List to save!");
+            }
+            
+            
+
+			
+
+		});
+
 		// Adding and arranging all the nodes in the grid - add(node, column, row)
 		GridPane gridPane1 = new GridPane();
 		gridPane1.add(tfStudentID, 0, 0);
@@ -72,8 +104,9 @@ public class Main extends Application implements Serializable {
 		gridPane1.add(btnShowTotal, 0, 1);
 		gridPane1.add(tfTotalNumberOfStudents, 1, 1);
 		gridPane1.add(tfStudentDel, 0, 2);
-		gridPane1.add(btnDelStudent, 1, 2);
-		gridPane1.add(taMyOutput, 0, 3, 2, 1);
+        gridPane1.add(btnDelStudent, 1, 2);
+         gridPane1.add(btnSaveDB, 0, 3);
+		gridPane1.add(taMyOutput, 0, 4, 2, 1);
 
 		// Preparing the Stage (i.e. the container of any JavaFX application)
 		// Create a Scene by passing the root group object, height and width
